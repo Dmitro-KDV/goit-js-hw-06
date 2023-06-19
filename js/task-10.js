@@ -11,17 +11,21 @@ const btnDestroy = document.querySelector("#controls button[data-destroy]");
 const boxes = document.querySelector("#boxes");
 
 const createBoxes = (amount) => {
+  boxes.innerHTML = '';
   let wh = 30;
-  for (let i = 0; i <= amount; i += 1) {
+  const elements = [];
+  for (let i = 0; i <= amount-1; i += 1) {
     let divBoxes = document.createElement("div");
     divBoxes.style.backgroundColor = getRandomHexColor();
     divBoxes.style.width = `${wh}px`;
     divBoxes.style.height = `${wh}px`; 
     divBoxes.classList.add('create');
     wh += 10;
-    boxes.append(divBoxes);
+    elements.push(divBoxes);
   }
+  boxes.append(...elements);
 }
+
 let output = 0;
 
 btnCreate.addEventListener("click", (event) => {
@@ -35,15 +39,9 @@ number.addEventListener("input", (event) => {
       output = event.currentTarget.value;
 });
 
-const destroyBoxes = () => {
-  const boxesDiv = document.querySelectorAll(".create");
-  for (const create of boxesDiv) {
-    create.remove();
-  }
-  number.value = '';
-  output = 0;
-}
 
 btnDestroy.addEventListener("click", (event) => {
-  return output === 0 ? alert('Немає значення!') : destroyBoxes(output);
+  boxes.innerHTML = '';
+  number.value = '';
+  output = 0;
 });
